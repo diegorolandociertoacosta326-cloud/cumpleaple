@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7627b5">
+  <meta name="description" content="CUMPLEAPP - Registro y celebraciones de cumpleaños del 6.º C APSTI">
+  <title>CUMPLEAPP | VI - APSTI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="CUMPLEAPP.js" defer></script>
+</head>
+
+<body>
+
+  <!-- NOTIFICACIONES -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- APLICACION -->
+  <div class="app-container">
+
+    <!-- PANTALLA 1: BIENVENIDA -->
+    <section id="welcomeScreen" class="screen welcome-screen active">
+
+      <div class="welcome-content">
+        <div class="welcome-decoration">
+          <span class="heart heart-1">💜</span>
+          <span class="heart heart-2">💗</span>
+          <span class="heart heart-3">💜</span>
+        </div>
+
+        <div class="cake-illustration">🎂</div>
+
+        <h1 class="app-logo">CUMPLEAPP</h1>
+
+        <p class="welcome-subtitle">
+          ¡Recordemos juntos<br>
+          cada cumpleaños!
+        </p>
+
+        <div class="class-badge">
+          VI - APSTI
+        </div>
+
+        <button id="startBtn" class="btn btn-primary btn-start" type="button">
+          INICIO
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="welcome-waves">
+        <div class="wave wave-one"></div>
+        <div class="wave wave-two"></div>
+      </div>
+
+    </section>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div id="mainApp" class="main-app hidden">
+
+      <!-- ENCABEZADO -->
+      <header class="app-header">
+
+        <button id="menuBtn" class="header-icon" type="button" aria-label="Abrir menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <h2 id="headerTitle">¡ VI - APSTI! </h2>
+
+        <button id="notificationBtn" class="header-icon notification-button" type="button" aria-label="Notificaciones">
+          <i class="fa-solid fa-bell"></i>
+          <span id="notificationDot" class="notification-dot hidden"></span>
+        </button>
+
+      </header>
+
+      <!-- MENU LATERAL -->
+      <div id="sidebarOverlay" class="sidebar-overlay hidden"></div>
+
+      <aside id="sidebar" class="sidebar" aria-label="Menú principal">
+
+        <div class="sidebar-header">
+          <div class="sidebar-logo">🎂</div>
+          <h2>CUMPLEAPP</h2>
+          <p> VI - APSTI</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button type="button" data-page="dashboard">
+            <i class="fa-solid fa-house"></i> Inicio
+          </button>
+
+          <button type="button" data-page="members">
+            <i class="fa-solid fa-users"></i> Compañeros
+          </button>
+
+          <button type="button" data-page="register">
+            <i class="fa-solid fa-user-plus"></i> Registrar
+          </button>
+
+          <button type="button" data-page="calendar">
+            <i class="fa-solid fa-calendar-days"></i> Calendario
+          </button>
+
+          <button type="button" data-page="upcoming">
+            <i class="fa-solid fa-cake-candles"></i> Próximos
+          </button>
+
+          <button type="button" data-page="celebrations">
+            <i class="fa-solid fa-star"></i> Celebraciones
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          Hecho con 💜 para  VI - APSTI
+        </div>
+
+      </aside>
+
+      <!-- CONTENIDO -->
+      <main class="main-content">
+
+        <!-- PANTALLA 2: PANEL PRINCIPAL -->
+        <section id="dashboardPage" class="page active" data-title="¡Hola,  VI - APSTI">
+
+          <div class="dashboard-greeting">
+            <h2>¡Bienvenidos! 🎉</h2>
+            <p>Celebremos juntos cada fecha especial.</p>
+          </div>
+
+          <div class="stats-grid">
+
+            <div class="stat-card">
+              <i class="fa-solid fa-users stat-icon"></i>
+              <strong id="totalMembers">0</strong>
+              <span>Total</span>
+            </div>
+
+            <div class="stat-card">
+              <i class="fa-solid fa-graduation-cap stat-icon"></i>
+              <strong id="totalStudents">0</strong>
+              <span>Estudiantes</span>
+            </div>
+
+            <div class="stat-card">
+              <i class="fa-solid fa-user-tie stat-icon"></i>
+              <strong id="totalTeachers">0</strong>
+              <span>Docentes</span>
+            </div>
+
+          </div>
+
+          <div class="section-heading">
+            <h3>🎁 Cumpleaños de hoy</h3>
+          </div>
+
+          <div id="todayBirthdays" class="birthday-card today-card">
+            <div class="empty-state">
+              <span>🎂</span>
+              <p>Consultando cumpleaños...</p>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <h3>📅 El siguiente cumpleaños</h3>
+          </div>
+
+          <div id="nextBirthday" class="birthday-card next-card">
+            <div class="empty-state">
+              <span>🎉</span>
+              <p>Aún no hay cumpleaños registrados.</p>
+            </div>
+          </div>
+
+          <button id="addMemberBtn" class="btn btn-primary btn-full" type="button">
+            <i class="fa-solid fa-plus"></i>
+            Registrar integrante
+          </button>
+
+        </section>
+
+        <!-- PANTALLA 3: REGISTRAR -->
+        <section id="registerPage" class="page" data-title="Registrar">
+
+          <div class="form-heading">
+            <h2 id="formTitle">Nuevo integrante</h2>
+            <p>Completa los datos del compañero o docente.</p>
+          </div>
+
+          <form id="memberForm" novalidate>
+
+            <input type="hidden" id="memberId">
+
+            <div class="photo-upload-container">
+              <label for="memberPhoto" class="photo-upload" title="Seleccionar fotografía">
+                <img id="photoPreview" class="photo-preview hidden" alt="Vista previa de fotografía">
+                <i id="photoPlaceholder" class="fa-solid fa-user"></i>
+                <span class="camera-icon">
+                  <i class="fa-solid fa-camera"></i>
+                </span>
+              </label>
+
+              <input type="file" id="memberPhoto" accept="image/png,image/jpeg,image/webp" hidden>
+              <p>Agregar fotografía (opcional)</p>
+            </div>
+
+            <div class="form-group">
+              <label for="firstName">Nombres</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="firstName" name="firstName" placeholder="Ingresa los nombres" maxlength="80" required autocomplete="given-name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Apellidos</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="lastName" name="lastName" placeholder="Ingresa los apellidos" maxlength="80" required autocomplete="family-name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="memberType">Tipo de integrante</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-users"></i>
+                <select id="memberType" name="memberType" required>
+                  <option value="">Seleccionar tipo</option>
+                  <option value="student">Estudiante</option>
+                  <option value="teacher">Docente</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="birthDate">Fecha de nacimiento</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-calendar-days"></i>
+                <input type="date" id="birthDate" name="birthDate" required>
+              </div>
+            </div>
+
+            <div id="formError" class="form-error hidden" role="alert"></div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span id="saveBtnText">Guardar integrante</span>
+            </button>
+
+            <button id="cancelFormBtn" type="button" class="btn btn-outline btn-full">
+              Cancelar
+            </button>
+
+          </form>
+
+        </section>
+
+        <!-- PANTALLA 4: LISTA -->
+        <section id="membersPage" class="page" data-title="Mis Compañeros">
+
+          <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="searchMembers" type="search" placeholder="Buscar compañero..." aria-label="Buscar compañeros">
+          </div>
+
+          <div class="filter-container">
+            <button class="filter-btn active" type="button" data-filter="all">Todos</button>
+            <button class="filter-btn" type="button" data-filter="student">Estudiantes</button>
+            <button class="filter-btn" type="button" data-filter="teacher">Docentes</button>
+          </div>
+
+          <div class="list-heading">
+            <h3>Integrantes registrados</h3>
+            <span id="membersCount">0 integrantes</span>
+          </div>
+
+          <div id="membersList" class="members-list"></div>
+
+          <button id="floatingAddBtn" class="floating-add-btn" type="button" aria-label="Agregar integrante">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+
+        </section>
+
+        <!-- PANTALLA 5: CALENDARIO -->
+        <section id="calendarPage" class="page" data-title="Calendario">
+
+          <div class="calendar-container">
+
+            <div class="calendar-header">
+              <button id="prevMonth" type="button" aria-label="Mes anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+
+              <h3 id="calendarMonth">Noviembre 2026</h3>
+
+              <button id="nextMonth" type="button" aria-label="Mes siguiente">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="calendar-weekdays">
+              <span>Lu</span>
+              <span>Ma</span>
+              <span>Mi</span>
+              <span>Ju</span>
+              <span>Vi</span>
+              <span>Sá</span>
+              <span>Do</span>
+            </div>
+
+            <div id="calendarDays" class="calendar-days"></div>
+
+            <div class="calendar-legend">
+              <span><i class="legend-dot birthday-dot"></i> Cumpleaños</span>
+              <span><i class="legend-dot today-dot"></i> Hoy</span>
+            </div>
+
+          </div>
+
+          <div class="section-heading">
+            <h3>🎂 Cumpleaños del día</h3>
+          </div>
+
+          <div id="selectedDateBirthdays" class="calendar-birthdays"></div>
+
+        </section>
+
+        <!-- PANTALLA 6: PROXIMOS -->
+        <section id="upcomingPage" class="page" data-title="Próximos Cumpleaños">
+
+          <div class="upcoming-header">
+            <h2>🎉 Próximos cumpleaños</h2>
+            <p>¡Que ninguna fecha especial pase desapercibida!</p>
+          </div>
+
+          <div id="upcomingList" class="upcoming-list"></div>
+
+          <div class="reminder-banner">
+            <i class="fa-solid fa-bell"></i>
+            <p>¡No olvides celebrar sus cumpleaños! 💗</p>
+          </div>
+
+        </section>
+
+        <!-- PANTALLA 7: CELEBRACIONES -->
+        <section id="celebrationsPage" class="page" data-title="Celebraciones">
+
+          <div class="celebrations-heading">
+            <h2>🎊 Nuestras celebraciones</h2>
+            <p>Guardemos los momentos especiales.</p>
+          </div>
+
+          <div class="celebration-tabs">
+            <button id="celebratedTab" class="celebration-tab active" type="button" data-celebration="celebrated">
+              Celebrados
+            </button>
+
+            <button id="pendingTab" class="celebration-tab" type="button" data-celebration="pending">
+              Pendientes
+            </button>
+          </div>
+
+          <div id="celebrationsList" class="celebrations-list"></div>
+
+          <div class="celebration-footer">
+            <span>⭐</span>
+            <p>¡Sigamos celebrando juntos en  VI - APSTI ❤️</p>
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- NAVEGACION INFERIOR -->
+      <nav class="bottom-nav" aria-label="Navegación inferior">
+
+        <button class="nav-item active" type="button" data-page="dashboard">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </button>
+
+        <button class="nav-item" type="button" data-page="members">
+          <i class="fa-solid fa-users"></i>
+          <span>Lista</span>
+        </button>
+
+        <button class="nav-item" type="button" data-page="calendar">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>Calendario</span>
+        </button>
+
+        <button class="nav-item" type="button" data-page="upcoming">
+          <i class="fa-solid fa-cake-candles"></i>
+          <span>Próximos</span>
+        </button>
+
+        <button class="nav-item" type="button" data-page="celebrations">
+          <i class="fa-solid fa-star"></i>
+          <span>Más</span>
+        </button>
+
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- MODAL DETALLES -->
+  <div id="memberModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalMemberName">
+
+    <div class="modal-content">
+
+      <button id="closeModalBtn" class="modal-close" type="button" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-profile">
+        <div id="modalAvatar" class="modal-avatar">👤</div>
+        <h2 id="modalMemberName">Nombre del integrante</h2>
+        <span id="modalMemberType" class="member-type-badge">Estudiante</span>
+      </div>
+
+      <div class="modal-info">
+        <div class="info-row">
+          <i class="fa-solid fa-calendar-days"></i>
+          <div>
+            <small>Fecha de nacimiento</small>
+            <strong id="modalBirthDate">--/--/----</strong>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <i class="fa-solid fa-cake-candles"></i>
+          <div>
+            <small>Próximo cumpleaños</small>
+            <strong id="modalCountdown">-- días</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="editMemberBtn" class="btn btn-primary" type="button">
+          <i class="fa-solid fa-pen"></i> Editar
+        </button>
+
+        <button id="deleteMemberBtn" class="btn btn-danger" type="button">
+          <i class="fa-solid fa-trash"></i> Eliminar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMACION -->
+  <div id="confirmModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+
+    <div class="modal-content confirm-content">
+      <div class="confirm-icon">⚠️</div>
+      <h2 id="confirmTitle">¿Estás seguro?</h2>
+      <p id="confirmMessage">Esta acción no se puede deshacer.</p>
+
+      <div class="modal-actions">
+        <button id="confirmCancelBtn" class="btn btn-outline" type="button">
+          Cancelar
+        </button>
+        <button id="confirmAcceptBtn" class="btn btn-danger" type="button">
+          Confirmar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
